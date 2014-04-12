@@ -323,13 +323,13 @@ def parse_command_line(argv):
         parser = argparse.ArgumentParser(description='Python mass editor',
                                          epilog=example,
                                          formatter_class=formatter_class)
-        parser.add_argument('-v', '--version', action='version',
+        parser.add_argument('--version', action='version',
                             version='%(prog)s {}'.format(__version__))
     parser.add_argument('-i', '--in-place', dest='dry_run',
                         action='store_false', default=True,
                         help='modify target file(s) in place. '
                         'Shows diff otherwise.')
-    parser.add_argument('-V', '--verbose', dest='verbose_count',
+    parser.add_argument('-v', '--verbose', dest='verbose_count',
                         action='count', default=0,
                         help='increases log verbosity (can be specified '
                         'multiple times)')
@@ -445,6 +445,7 @@ def edit_files(patterns, expressions=[],  # pylint: disable=R0913, R0914
 
     processed_paths = []
     for path in get_paths(patterns, start_dir=start_dir, max_depth=max_depth):
+        log.debug(path)
         diffs = list(editor.edit_file(path))
         if dry_run:
             output.write(''.join(diffs))
