@@ -8,7 +8,7 @@ formerly known as Python Mass Editor
 
 Implements a python mass editor class to process multiple files using Python
 code. The modification(s) is (are) shown on stdout as a diff output. One
-can then modify the target file(s) in place with the -w/--write option.
+can then modify the target file(s) in place with the -i/--in-place option.
 
 .. image:: https://travis-ci.org/elmotec/massedit.png?branch=master
     :target: https://travis-ci.org/elmotec/massedit
@@ -32,48 +32,6 @@ Usage
 
 You probably will need to know the basics of the `Python re module`_ (regular 
 expressions).
-
-::
-  
-  usage: massedit.py [-h] [-v] [-w] [-V] [-e EXPRESSIONS] [-s START_DIR]
-                     [-m MAX_DEPTH] [-o output]
-                     pattern [pattern ...]
-  
-  Python mass editor
-  
-  positional arguments:
-    pattern               shell-like file name patterns to process.
-  
-  optional arguments:
-    -h, --help            show this help message and exit
-    -v, --version         show program's version number and exit
-    -w, --write           modify target file(s) in place. Shows diff otherwise.
-    -V, --verbose         increases log verbosity (can be specified multiple
-                          times)
-    -e EXPRESSIONS, --expression EXPRESSIONS
-                          Python expressions applied to target files. Use the
-                          line variable to reference the current line.
-    -f FUNCTIONS, --function FUNCTIONS
-                          Python function to apply to target file. Takes file
-                          content as input and yield lines. Specify function as
-                          <module>:<function name>.                          
-    -s START_DIR, --start START_DIR
-                          Directory from which to look for target files.
-    -m MAX_DEPTH, --max-depth-level MAX_DEPTH
-                          Maximum depth when walking subdirectories.
-    -o output, --output output
-                          redirect output to a file
-  
-  Examples:
-  # Simple string substitution (-e). Will show a diff. No changes applied.
-  massedit.py -e "re.sub('failIf', 'assertFalse', line)" *.py
-  
-  # File level modifications (-f). Overwrites the files in place (-w).
-  massedit.py -w -f fixer:main *.py
-  
-  # Will change all test*.py in subdirectories of tests.
-  massedit.py -e "re.sub('failIf', 'assertFalse', line)" -s tests test*.py
-  
     
 If massedit is installed as a package (from pypi for instance), one can 
 interact with it as a command line tool :

@@ -37,11 +37,13 @@ import sys
 import logging
 import argparse
 import difflib
-# Most manip will involve re so we include it here for convenience.
-import re  # pylint: disable=W0611
 import fnmatch
 import io
 import subprocess
+
+# Most manip will involve re so we include it here for convenience.
+import re
+assert re
 
 
 log = logging.getLogger(__name__)
@@ -312,8 +314,8 @@ def parse_command_line(argv):
     # Simple string substitution (-e). Will show a diff. No changes applied.
     {0} -e "re.sub('failIf', 'assertFalse', line)" *.py
 
-    # File level modifications (-f). Overwrites the files in place (-w).
-    {0} -w -f fixer:main *.py
+    # File level modifications (-f). Overwrites the files in place (-i).
+    {0} -i -f fixer:main *.py
 
     # Will change all test*.py in subdirectories of tests.
     {0} -e "re.sub('failIf', 'assertFalse', line)" -s tests test*.py
@@ -330,7 +332,7 @@ def parse_command_line(argv):
                                          formatter_class=formatter_class)
         parser.add_argument("-v", "--version", action="version",
                             version="%(prog)s {}".format(__version__))
-    parser.add_argument("-w", "--write", dest="dry_run",
+    parser.add_argument("-i", "--in-place", dest="dry_run",
                         action="store_false", default=True,
                         help="modify target file(s) in place. "
                         "Shows diff otherwise.")
@@ -339,8 +341,11 @@ def parse_command_line(argv):
                         help="increases log verbosity (can be specified "
                         "multiple times)")
     parser.add_argument('-e', "--expression", dest="expressions", nargs=1,
+                        default=[],
                         help="Python expressions applied to target files. "
                         "Use the line variable to reference the current line.")
+    parser.add_argument('-w', "--word", nargs=2,
+                        help="replace word")
     parser.add_argument('-f', "--function", dest="functions", nargs=1,
                         help="Python function to apply to target file. "
                         "Takes file content as input and yield lines. "
@@ -355,15 +360,22 @@ def parse_command_line(argv):
                         type=argparse.FileType('w'), default=sys.stdout,
                         help="redirect output to a file")
     parser.add_argument('patterns', metavar="pattern",
-                        nargs='+',  # argparse.REMAINDER,
+                        nargs='+',
                         help="shell-like file name patterns to process.")
     arguments = parser.parse_args(argv[1:])
 
-    if not (arguments.expressions or
-            arguments.functions or
-            arguments.executables):
+    if arguments.word:
+        arguments.expressions.append(
+            r're.sub(r"\b{}\b", "{}", line)'.format(arguments.word[0],
+                                                    arguments.word[1]))
+
+    if not (
+        arguments.expressions or
+        arguments.functions or
+        arguments.executables
+    ):
         parser.error(
-            '--expression, --function, or --executable must be specified')
+            '--executable, --expression, --function, or must be specified')
 
     # Sets log level to WARN going more verbose for each new -V.
     log.setLevel(max(3 - arguments.verbose_count, 0) * 10)

@@ -257,9 +257,9 @@ class TestMassEditWithFile(unittest.TestCase):  # pylint: disable=R0904
     def test_command_line_replace(self):
         """Check simple replacement via command line."""
         file_base_name = os.path.basename(self.file_name)
-        massedit.command_line(["massedit.py", "-w", "-e",
+        massedit.command_line(["massedit.py", "-i", "-e",
                                "re.sub('Dutch', 'Guido', line)",
-                               "-w", "-s", self.start_directory,
+                               "-i", "-s", self.start_directory,
                                file_base_name])
         with open(self.file_name, "r") as new_file:
             new_lines = new_file.readlines()
@@ -346,9 +346,9 @@ class TestMassEditWithFile(unittest.TestCase):  # pylint: disable=R0904
         os.chmod(self.file_name, mode)
         self.assertTrue(is_executable(self.file_name))
         file_base_name = os.path.basename(self.file_name)
-        massedit.command_line(["massedit.py", "-w", "-e",
+        massedit.command_line(["massedit.py", "-i", "-e",
                                "re.sub('Dutch', 'Guido', line)",
-                               "-w", "-s", self.start_directory,
+                               "-i", "-s", self.start_directory,
                                file_base_name])
         statinfo = os.stat(self.file_name)
         self.assertEqual(statinfo.st_mode, mode)
@@ -377,7 +377,7 @@ class TestMassEditWalk(unittest.TestCase):  # pylint: disable=R0904
 
     def test_process_subdirectory(self):
         """Check that the editor works correctly in subdirectories."""
-        arguments = ["-r", "-s", self.directory, "-w",
+        arguments = ["-r", "-s", self.directory, "-i",
                      "-e",  "re.sub('text', 'blah blah', line)",
                      "*.txt"]
         processed_files = massedit.command_line(arguments)
@@ -388,7 +388,7 @@ class TestMassEditWalk(unittest.TestCase):  # pylint: disable=R0904
 
     def test_maxdepth_one(self):
         """Check that specifying -m 1 prevents modifiction to subdir."""
-        arguments = ["-r", "-s", self.directory, "-w",
+        arguments = ["-r", "-s", self.directory, "-i",
                      "-e",  "re.sub('text', 'blah blah', line)",
                      "-m", "0", "*.txt"]
         processed_files = massedit.command_line(arguments)
