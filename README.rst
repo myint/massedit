@@ -10,9 +10,9 @@ Implements a python mass editor class to process multiple files using Python
 code. The modification(s) is (are) shown on stdout as a diff output. One
 can then modify the target file(s) in place with the -i/--in-place option.
 
-.. image:: https://travis-ci.org/elmotec/massedit.png?branch=master
-    :target: https://travis-ci.org/elmotec/massedit
-    :alt: Build Status
+.. image:: https://travis-ci.org/myint/massedit.svg?branch=master
+    :target: https://travis-ci.org/myint/massedit
+    :alt: Build status
 
 
 .. WARNING::
