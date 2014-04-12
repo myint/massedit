@@ -1,5 +1,5 @@
 ========
-massedit 
+massedit
 ========
 
 ------------------------------------
@@ -17,23 +17,23 @@ can then modify the target file(s) in place with the -i/--in-place option.
 
 .. WARNING::
 
-  This tool is usefull as far as it goes but it does rely on the python 
-  ``eval()`` function and does not check the code being executed. 
+  This tool is usefull as far as it goes but it does rely on the python
+  ``eval()`` function and does not check the code being executed.
   It is a major security risk and one should not use this tool
   in a production environment.
 
-  See `Ned Batchelder's article`_ for a thorough discussion of the dangers 
-  linked to ``eval()`` and ways to circumvent them. Note that None of the 
+  See `Ned Batchelder's article`_ for a thorough discussion of the dangers
+  linked to ``eval()`` and ways to circumvent them. Note that None of the
   counter-measure suggested in the article are implemented at this time.
 
 
 Usage
 -----
 
-You probably will need to know the basics of the `Python re module`_ (regular 
+You probably will need to know the basics of the `Python re module`_ (regular
 expressions).
-    
-If massedit is installed as a package (from pypi for instance), one can 
+
+If massedit is installed as a package (from pypi for instance), one can
 interact with it as a command line tool :
 
 ::
@@ -48,7 +48,7 @@ Or as a library (command line option above to be passed as kewyord arguments):
   >>> import massedit
   >>> filenames = ['massedit.py']
   >>> massedit.edit_files(filenames, ["re.sub('Jerome', 'J.', line)"])
-  
+
 
 Lastly, there is a convenient ``massedit.bat`` wrapper for Windows included in
 the distribution.
@@ -60,7 +60,7 @@ Installation
 Download ``massedit.py`` from ``http://github.com/elmotec/massedit`` or :
 
 ::
-  
+
   pip install massedit
 
 
@@ -68,9 +68,9 @@ Plans
 -----
 
 - Add support for 3rd party tool (e.g. `autopep8`_) to process the files.
-- Add support for a file of expressions as an argument to allow multiple 
+- Add support for a file of expressions as an argument to allow multiple
   modification at once.
-- Find a satisfactory way (ie. easy to use) to handle multiline regex as the 
+- Find a satisfactory way (ie. easy to use) to handle multiline regex as the
   current version works on a line by line basis.
 - Add magic variables ``lineno`` and ``filename`` in addition to ``line``.
 
@@ -78,10 +78,10 @@ Plans
 Rationale
 ---------
 
-- I have a hard time practicing more than a few dialects of regular 
-  expressions. 
-- I need something portable to Windows without being bothered by eol. 
-- I believe Python is the ideal tool to build something more powerful than 
+- I have a hard time practicing more than a few dialects of regular
+  expressions.
+- I need something portable to Windows without being bothered by eol.
+- I believe Python is the ideal tool to build something more powerful than
   simple regex based substitutions.
 
 
@@ -89,8 +89,8 @@ Background
 ----------
 
 I have been using runsed and checksed (from Unix Power Tools) for years and
-did not find a good substitute under Windows until I came across Graham 
-Fawcett python recipe 437932_ on ActiveState. It inspired me to write the 
+did not find a good substitute under Windows until I came across Graham
+Fawcett python recipe 437932_ on ActiveState. It inspired me to write the
 massedit.
 
 The core was fleshed up a little, and here we are. If you find it useful and
@@ -130,9 +130,9 @@ Changes
   a command line tool (suggested by Maxim Veksler).
 
 0.60 (2012-07-04)
-  Treats arguments as patterns rather than files to ease processing of 
+  Treats arguments as patterns rather than files to ease processing of
   multiple files in multiple subdirectories.  Added -s (start directory)
-  and -m (max depth) options. 
+  and -m (max depth) options.
 
 0.52 (2012-06-05)
   Upgraded for python 3. Still compatible with python 2.7.
@@ -154,4 +154,3 @@ Steven Myint, https://github.com/myint
 .. _MIT License: http://en.wikipedia.org/wiki/MIT_License
 .. _autopep8: http://pypi.python.org/pypi/autopep8
 .. _Ned Batchelder's article: http://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html
-
