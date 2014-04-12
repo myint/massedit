@@ -95,7 +95,6 @@ class MassEdit(object):
 
         """
         self.code_objs = dict()
-        self._codes = []
         self._functions = []
         self._executables = []
         self.dry_run = None
@@ -266,7 +265,6 @@ class MassEdit(object):
     def set_code_exprs(self, codes):
         """Convenience: sets all the code expressions at once."""
         self.code_objs = dict()
-        self._codes = []
         for code in codes:
             self.append_code_expr(code)
 
