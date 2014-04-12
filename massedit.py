@@ -314,17 +314,11 @@ def parse_command_line(argv):
     {0} -e "re.sub('failIf', 'assertFalse', line)" -s tests test*.py
     """).format(os.path.basename(argv[0]))
     formatter_class = argparse.RawDescriptionHelpFormatter
-    if sys.version_info[0] < 3:
-        parser = argparse.ArgumentParser(description='Python mass editor',
-                                         version=__version__,
-                                         epilog=example,
-                                         formatter_class=formatter_class)
-    else:
-        parser = argparse.ArgumentParser(description='Python mass editor',
-                                         epilog=example,
-                                         formatter_class=formatter_class)
-        parser.add_argument('--version', action='version',
-                            version='%(prog)s {}'.format(__version__))
+    parser = argparse.ArgumentParser(description='Python mass editor',
+                                     epilog=example,
+                                     formatter_class=formatter_class)
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s {}'.format(__version__))
     parser.add_argument('-i', '--in-place', dest='dry_run',
                         action='store_false', default=True,
                         help='modify target file(s) in place. '
