@@ -220,8 +220,6 @@ class MassEdit(object):
 
     def append_code_expr(self, code):
         """Compile argument and adds it to the list of code objects."""
-        if not isinstance(code, str):  # expects a string.
-            raise TypeError('string expected')
         log.debug('compiling code {}...'.format(code))
         try:
             code_obj = compile(code, '<string>', 'eval')
@@ -257,9 +255,6 @@ class MassEdit(object):
           executable (str): os callable executable.
 
         """
-        if not isinstance(executable, str):
-            raise TypeError('expected executable name as str, not {}'.
-                            format(executable.__class__.__name__))
         self._executables.append(executable)
 
     def set_code_exprs(self, codes):
