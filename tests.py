@@ -423,7 +423,7 @@ class TestCommandLine(unittest.TestCase):  # pylint: disable=R0904
     def test_file_option(self):
         """Check processing with function."""
         def add_header(data):
-            """Adds header at the begining of the data."""
+            """Adds header at the beginning of the data."""
             yield 'header on top\n'
             for line in data:
                 yield line

@@ -17,7 +17,7 @@ can then modify the target file(s) in place with the -i/--in-place option.
 
 .. WARNING::
 
-  This tool is usefull as far as it goes but it does rely on the python
+  This tool is useful as far as it goes but it does rely on the python
   ``eval()`` function and does not check the code being executed.
   It is a major security risk and one should not use this tool
   in a production environment.
