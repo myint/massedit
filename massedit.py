@@ -32,7 +32,6 @@ __license__ = 'MIT'
 
 
 import os
-import shutil
 import sys
 import logging
 import argparse
@@ -188,34 +187,8 @@ class MassEdit(object):
         diffs = difflib.unified_diff(from_lines, to_lines,
                                      fromfile=file_name, tofile='<new>')
         if not self.dry_run:
-            bak_file_name = file_name + '.bak'
-            if os.path.exists(bak_file_name):
-                msg = '{} already exists'.format(bak_file_name)
-                if sys.version_info < (3, 3):
-                    raise OSError(msg)
-                else:
-                    raise FileExistsError(msg)
-            try:
-                os.rename(file_name, bak_file_name)
-                with io.open(file_name, 'w', encoding='utf-8') as new_file:
-                    new_file.writelines(to_lines)
-                # Keeps mode of original file.
-                shutil.copymode(bak_file_name, file_name)
-            except Exception as err:
-                msg = 'failed to write output to {}: {}'
-                log.error(msg.format(file_name, err))
-                # Try to recover...
-                try:
-                    os.rename(bak_file_name, file_name)
-                except Exception as err:  # pylint: disable=W0703
-                    msg = 'failed to restore {} from {}: {}'
-                    log.error(msg.format(file_name, bak_file_name, err))
-                raise
-            try:
-                os.unlink(bak_file_name)
-            except Exception as err:  # pylint: disable=W0703
-                msg = 'failed to remove backup {}: {}'
-                log.warning(msg.format(bak_file_name, err))
+            with io.open(file_name, 'w', encoding='utf-8') as new_file:
+                new_file.writelines(to_lines)
         return list(diffs)
 
     def append_code_expr(self, code):

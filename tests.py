@@ -237,23 +237,6 @@ class TestMassEditWithFile(unittest.TestCase):  # pylint: disable=R0904
          Now is better than never.\n""")
         self.assertEqual(''.join(diffs[5:9]), ''.join(expected_diffs[1:]))
 
-    def test_replace_cannot_backup(self):
-        """Check replacement fails if backup fails."""
-        import shutil
-        editor = massedit.MassEdit()
-        editor.append_code_expr("re.sub('Dutch', 'Guido', line)")
-        backup = self.file_name + '.bak'
-        try:
-            shutil.copy(self.file_name, backup)
-            if sys.version_info < (3, 3):
-                error = OSError
-            else:
-                error = FileExistsError
-            with self.assertRaises(error):
-                editor.edit_file(self.file_name)
-        finally:
-            os.unlink(backup)
-
     def test_command_line_replace(self):
         """Check simple replacement via command line."""
         file_base_name = os.path.basename(self.file_name)
@@ -449,15 +432,6 @@ class TestCommandLine(unittest.TestCase):  # pylint: disable=R0904
             massedit.edit_files(['tests.py'], functions=[':'])
         expected = "':' is not a callable function: " + \
                    "'dict' object has no attribute ''\n"
-        self.assertEqual(log_sink.log, expected)
-
-    def test_bad_function(self):
-        """Check error when the function name is not valid."""
-        log_sink = LogInterceptor(massedit.log)
-        with self.assertRaises(AttributeError):
-            massedit.edit_files(['tests.py'], functions=['massedit:bong'])
-        expected = "'massedit:bong' is not a callable function: " + \
-                   "'module' object has no attribute 'bong'\n"
         self.assertEqual(log_sink.log, expected)
 
     def test_bad_function2(self):
