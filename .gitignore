@@ -1,6 +1,7 @@
 *.pyc
 *.swp
 *.tmp
+.eggs/
 .unison/ar*
 .unison/fp*
 .project
