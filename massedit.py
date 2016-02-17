@@ -294,8 +294,8 @@ def parse_command_line(argv):
                         version='%(prog)s {}'.format(__version__))
     parser.add_argument('-i', '--in-place', dest='dry_run',
                         action='store_false', default=True,
-                        help='modify target file(s) in place. '
-                        'Shows diff otherwise.')
+                        help='modify target file(s) in place '
+                        'instead of showing diff')
     parser.add_argument('-v', '--verbose', dest='verbose_count',
                         action='count', default=0,
                         help='increases log verbosity (can be specified '
@@ -309,7 +309,7 @@ def parse_command_line(argv):
     parser.add_argument('-f', '--function', dest='functions', nargs=1,
                         help='Python function to apply to target file; '
                         'takes file content as input and yield lines; '
-                        'specify function as [module]:?<function name>.')
+                        'specify function as [module]:?<function name>')
     parser.add_argument('-x', '--executable', dest='executables', nargs=1,
                         help='Python executable to apply to target file')
     parser.add_argument('-s', '--start', dest='start_dir',
